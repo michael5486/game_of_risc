@@ -1,0 +1,7 @@
+{% if random_adjudication_list %}
+    <ul>
+    {% for adjudication in random_adjudication_list %}
+        <li><a href="{% url 'decisions:detail' adjudication.id %}">{{ adjudication.digest}}
+        </a></li>
+    {% endfor %}
+{% endif %}

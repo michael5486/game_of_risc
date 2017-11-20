@@ -11,10 +11,12 @@ First, I downloaded and parsed the data from http://ogc.osd.mil/doha/industrial/
 ### 2 
 
 Using the Python html parser, Beautiful Soup, I organized the security clearance data into a progrmattically-accessbile format.
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
 ### 3
 
 Each adjudication has a digest which briefly describes the decision-making process for each adjudication. I looked for keywords in each digest which would clarify if an application for clearance was accepted or denied. Using the python Natural Language Toolkit, I parsed each adjudication for specific keywords, and stored the outputs in an sqlite3 database
+http://www.nltk.org/
 
 #4
 

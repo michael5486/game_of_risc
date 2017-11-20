@@ -8,7 +8,7 @@ class UserProfile(models.Model):
     num_correct_guesses = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return self.user
+        return "{}".format(self.user)
 
 class Adjudication(models.Model):
     digest = models.CharField(max_length=200)
@@ -19,11 +19,11 @@ class Adjudication(models.Model):
 
 class Decision(models.Model):
     adjudication_id = models.ForeignKey(Adjudication, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(UserProfile)
+    user_id = models.ForeignKey(User)
     answer = models.BooleanField()
     timestamp = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.answer
+        return "{}".format(self.id)
 
 
