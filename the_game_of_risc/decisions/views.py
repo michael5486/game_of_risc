@@ -19,16 +19,22 @@ def index(request):
 
 
 def detail(request, adjudication_id):
-    # if request.method == "POST":
-    #     form = DecisionForm()
-    #     if form.is_valid():
-    #         newDecision = form.save(commit=False)
-    #         newDecision.save()
-    #         return render(request, 'decisions/result.html', {'form': form})
-    # else:
-    #     form = DecisionForm()
+    correct_response = -1
     adjudication = get_object_or_404(Adjudication, pk=adjudication_id)
-    return render(request, 'decisions/detail.html', {'adjudication': adjudication})
+    if request.method == "POST":
+        form = DecisionForm(request.POST)
+        if form.is_valid():
+            decision = form.save(commit=False)
+            decision.timestamp = timezone.now()
+            decision.save()
+            if decision.answer == adjudication.outcome:
+                correct_response = 1
+            else:
+                correct_response = 0
+    else:
+        form=DecisionForm()
+
+    return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response})
 
 def result(request):
     if request.method == "POST":

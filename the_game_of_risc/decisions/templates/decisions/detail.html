@@ -22,5 +22,22 @@
     <hr>
 {% endblock %}
 
+{% block decision_block %}
+    <h1>Make Decision</h1>
+    <form method="POST" class="decision-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+    <hr>
+{% endblock %}
+
+{% block answer_block %}
+    {% if correct_response == 1%}
+        <h1>You entered the correct response!!</h1>
+    {% elif correct_response == 0%}
+        <h1>You entered the wrong response :(</h1>
+    {% endif %}
+{% endblock %}
+
 
 
