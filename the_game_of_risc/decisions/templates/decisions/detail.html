@@ -22,18 +22,5 @@
     <hr>
 {% endblock %}
 
-<a href="{% url 'decisions:detail' adjudication.id %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-
-{% block content %}
-    <h1>New Decision</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
-{% endblock %}
-
-<hr>
-
-
 
 
