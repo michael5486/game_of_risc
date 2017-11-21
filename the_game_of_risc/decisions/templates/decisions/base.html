@@ -1,0 +1,42 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}The Game of RISC{% endblock %}</title>
+</head>
+
+<body>
+
+    <div id="titlebar">
+        <h1>The Game of <strong>R</strong>eviewing <strong>I</strong>ndustrial <strong>S</strong>ecurity <strong>C</strong>learances</h1>
+        <hr>
+        <a href='/decisions'>{% bootstrap_button 'Home' size='lg' %}</a>
+        {% bootstrap_button 'High scores' size='lg' %}
+        <a href='/decisions/random'>{% bootstrap_button 'Random Case' size='lg' %}</a>
+
+
+    <hr>
+
+    </div>
+
+    <div id="sidebar">
+        {% block sidebar %}
+            <p>This is the sidebar</p>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div> 
+
+</body>
+</html>

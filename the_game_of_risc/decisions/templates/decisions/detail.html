@@ -1,37 +1,17 @@
-{# Load the tag library #}
-{% load bootstrap3 %}
+{% extends 'decisions/base.html' %}
 
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% block content %}
 
-{% block risc_title %}
-    <h1>The Game of <strong>R</strong>eviewing <strong>I</strong>ndustrial <strong>S</strong>ecurity <strong>C</strong>learances</h1>
-    <hr>
-{% endblock %}
-
-{% block site_list %}
-    <a href='/decisions'>{% bootstrap_button 'Home' size='lg' %}</a>
-    {% bootstrap_button 'High scores' size='lg' %}
-
-    <hr>
-{% endblock %}
-
-{% block adjudication_digest %}
     <h4>{{ adjudication.digest  }}</h4>
     <hr>
-{% endblock %}
 
-{% block decision_block %}
     <h1>Make Decision</h1>
     <form method="POST" class="decision-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
     <hr>
-{% endblock %}
 
-{% block answer_block %}
     {% if correct_response == 1%}
         <h1>You entered the correct response!!</h1>
     {% elif correct_response == 0%}
