@@ -1,7 +1,42 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block risc_title %}
+    <h1>The Game of <strong>R</strong>eviewing <strong>I</strong>ndustrial <strong>S</strong>ecurity <strong>C</strong>learances</h1>
+    <hr>
+{% endblock %}
+
+{% block site_list %}
+    {% bootstrap_button 'High scores' size='lg' %}
+    <hr>
+{% endblock %}
+
+{% block how_to_play %}
+<h2>How to Play RISC</h2>
+    <p>You are given a brief summary of a real security clearance application. You must read the summary, and decide if the application should be accepted or denied. Use your best judgment, our national security depends on it. Five random examples are shown below. Click "<strong>Begin game</strong>" to receive your first security clearance application. Your score is calculated by the number of applicationg you correctly process, good luck!</p>
+<hr>
+{% endblock %}
+
+
+
 {% if random_adjudication_list %}
-    <ul>
+    <ol>
     {% for adjudication in random_adjudication_list %}
-        <li><a href="{% url 'decisions:detail' adjudication.id %}">{{ adjudication.digest}}
-        </a></li>
+        {% block adjudication_content %}
+                <li>
+                    <h4><a href="{% url 'decisions:detail' adjudication.id %}">{{ adjudication.digest}}</a>
+                    </h4>
+                </li>
+            <hr>
+        {% endblock %}
     {% endfor %}
+    </ol>
 {% endif %}
+
+
+{% bootstrap_button 'Begin game' size='lg' %}
+

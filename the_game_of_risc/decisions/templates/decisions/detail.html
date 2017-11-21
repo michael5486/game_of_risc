@@ -1,3 +1,39 @@
-<h1>{{ adjudication.digest  }}</h1>
+{# Load the tag library #}
+{% load bootstrap3 %}
 
-<h1>{{adjudication.outcome }}<h1>
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block risc_title %}
+    <h1>The Game of <strong>R</strong>eviewing <strong>I</strong>ndustrial <strong>S</strong>ecurity <strong>C</strong>learances</h1>
+    <hr>
+{% endblock %}
+
+{% block site_list %}
+    <a href='/decisions'>{% bootstrap_button 'Home' size='lg' %}</a>
+    {% bootstrap_button 'High scores' size='lg' %}
+
+    <hr>
+{% endblock %}
+
+{% block adjudication_digest %}
+    <h4>{{ adjudication.digest  }}</h4>
+    <hr>
+{% endblock %}
+
+<a href="{% url 'decisions:detail' adjudication.id %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+
+{% block content %}
+    <h1>New Decision</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
+
+<hr>
+
+
+
+

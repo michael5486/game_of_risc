@@ -18,6 +18,13 @@ https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 Each adjudication has a digest which briefly describes the decision-making process for each adjudication. I looked for keywords in each digest which would clarify if an application for clearance was accepted or denied. Using the python Natural Language Toolkit, I parsed each adjudication for specific keywords, and stored the outputs in an sqlite3 database
 http://www.nltk.org/
 
-#4
+### 4
 
 Inputted the results from previous web scraping into the django backend sqlite database. Required previously created django models in order to correctly organize the data for usage in django.
+
+### 5 
+Edited the admin panel to allow administrator to quickly edit data on the backend database. Can now edit adjudication details, decisions, and user data from the django admin GUI 
+
+### 6 
+Creating user interface with bootstrap
+http://django-bootstrap3.readthedocs.io/en/latest/quickstart.html
