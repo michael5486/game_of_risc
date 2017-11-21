@@ -25,7 +25,13 @@
                 <hr>
             </div> 
             <div class="col-lg-4">        
-                <div class="well well-lg">Login Info</div>
+                <div class="well well-lg">
+                    {% if user.is_authenticated %}
+                        <p>Welcome, {{ user.username }} <a href="/decisions/logout/">Log out</a></p>
+                    {% else %}
+                        <p>Welcome, new user. Please <a href="/decisions/login/">log in</a>.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 

@@ -1,0 +1,22 @@
+{% extends 'decisions/base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+      <h2>Logout</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+
+
+{% else %} 
+    <h2>You must login first.</h2>
+
+
+
+{% endif %}
+
+{% endblock %}

@@ -3,14 +3,16 @@ from django.http import HttpResponseRedirect
 from django.utils import timezone
 
 from .models import Adjudication
-
 from .forms import DecisionForm
+
 
 # Create your views here.
 
 def index(request):
     random_adjudication_list = Adjudication.objects.order_by('?')[:5]
     context = {'random_adjudication_list': random_adjudication_list}
+
+
     return render(request, 'decisions/index.html', context)
 
 
@@ -21,6 +23,7 @@ def detail(request, adjudication_id):
         form = DecisionForm(request.POST)
         if form.is_valid():
             decision = form.save(commit=False)
+            decision.adjudication_id = adjudication
             decision.timestamp = timezone.now()
             decision.save()
             if decision.answer == adjudication.outcome:

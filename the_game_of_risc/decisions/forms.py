@@ -6,4 +6,4 @@ class DecisionForm(forms.ModelForm):
 
     class Meta:
         model = Decision
-        fields = ('adjudication_id', 'user_id', 'answer')
+        fields = ('user_id', 'answer')
