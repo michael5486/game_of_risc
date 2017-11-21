@@ -5,6 +5,7 @@
     <h4>{{ adjudication.digest  }}</h4>
     <hr>
 
+{% if user.is_authenticated %}
     <h1>Make Decision</h1>
     <form method="POST" class="decision-form">{% csrf_token %}
         {{ form.as_p }}
@@ -17,6 +18,10 @@
     {% elif correct_response == 0%}
         <h1>You entered the wrong response :(</h1>
     {% endif %}
+
+{% endif %}    
+
+
 {% endblock %}
 
 

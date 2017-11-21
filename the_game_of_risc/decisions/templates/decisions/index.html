@@ -10,7 +10,7 @@
 {% block content %}
 
     <h2>How to Play RISC</h2>
-        <p>You are given a brief summary of a real security clearance application. You must read the summary, and decide if the application should be accepted or denied. Use your best judgment, our national security depends on it. Five random examples are shown below. Click "<strong>Begin game</strong>" to receive your first security clearance application. Your score is calculated by the number of applicationg you correctly process, good luck!</p>
+        <p>You are given a brief summary of a real security clearance application. You must read the summary, and decide if the application should be accepted or denied. Use your best judgment, our national security depends on it. Five random examples are shown below. Login and click "<strong>Begin game</strong>" to receive your first security clearance application. Your score is calculated by the number of applications you correctly process, good luck!</p>
     <hr>
 
 
@@ -30,5 +30,6 @@
     {% endif %}
 
 
-    {% bootstrap_button 'Begin game' size='lg' %}
+    <a href="/decisions/random/">{% bootstrap_button 'Begin game' size='lg' %}</a>
+    
 {% endblock %}

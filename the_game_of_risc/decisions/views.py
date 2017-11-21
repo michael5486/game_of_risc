@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from .models import Adjudication
 from .forms import DecisionForm
@@ -23,6 +24,7 @@ def detail(request, adjudication_id):
         form = DecisionForm(request.POST)
         if form.is_valid():
             decision = form.save(commit=False)
+            decision.user_id = request.user
             decision.adjudication_id = adjudication
             decision.timestamp = timezone.now()
             decision.save()
@@ -39,20 +41,6 @@ def random(request):
     random_adjudication = Adjudication.objects.order_by('?')[:2]
     # adjudication = get_object_or_404(Adjudication, pk=adjudication_id)
     return redirect('/decisions/{}'.format(random_adjudication[0].id))
-
-
-# def decision_new(request):
-#     if request.method == "POST":
-#         form = DecisionForm(request.POST)
-#         if form.is_valid():
-#             decision = form.save(commit=False)
-#             decision.timestamp = timezone.now()
-#             decision.save()
-#             return redirect('https://www.google.com')
-#     else:
-#         form=DecisionForm()
-#     return render(request, 'decisions/decision_edit.html', {'form': form})
-
 
 
 
