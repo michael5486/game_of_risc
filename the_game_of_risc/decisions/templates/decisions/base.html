@@ -17,12 +17,13 @@
 
 <body>
 
-    <div class="container">
+    <div class="title_container">
         <div class="row">
-            <div class="col-lg-8">
-
+            <div class="col-lg-2">
+                <img class="img-responsive img-rounded" src="{% static 'decisions/game_of_risc.png'%}" alt="game_of_risc">
+            </div>
+            <div class="col-lg-6">
                 <h1>The Game of <strong>R</strong>eviewing <strong>I</strong>ndustrial <strong>S</strong>ecurity <strong>C</strong>learances</h1>
-                <hr>
             </div> 
             <div class="col-lg-4">        
                 <div class="well well-lg">
@@ -36,6 +37,9 @@
         </div>
 
     </div>
+
+    <hr>
+
 
     <a href='/decisions'>{% bootstrap_button 'Home' size='lg' %}</a>
     {% bootstrap_button 'High scores' size='lg' %}
