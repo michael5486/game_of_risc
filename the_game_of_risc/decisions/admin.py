@@ -7,6 +7,9 @@ from .models import Decision, Adjudication, UserProfile
 class AdjudicationAdmin(admin.ModelAdmin):
     list_display = ('id', 'digest', 'outcome')
     list_filter = ('outcome',)
+    {
+        'classes': ('wide', 'extrapretty'),
+    }
 
 
 class DecisionAdmin(admin.ModelAdmin):

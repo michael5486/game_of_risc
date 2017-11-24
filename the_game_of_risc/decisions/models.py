@@ -11,7 +11,7 @@ class UserProfile(models.Model):
         return "{}".format(self.user)
 
 class Adjudication(models.Model):
-    digest = models.CharField(max_length=200)
+    digest = models.CharField(max_length=1500)
     outcome = models.BooleanField()
 
     def __str__(self):
