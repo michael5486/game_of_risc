@@ -2,9 +2,13 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib import messages
+
 
 from .models import Adjudication
 from .forms import DecisionForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 
 # Create your views here.
@@ -12,7 +16,6 @@ from .forms import DecisionForm
 def index(request):
     random_adjudication_list = Adjudication.objects.order_by('?')[:5]
     context = {'random_adjudication_list': random_adjudication_list}
-
 
     return render(request, 'decisions/index.html', context)
 
@@ -41,6 +44,19 @@ def random(request):
     random_adjudication = Adjudication.objects.order_by('?')[:2]
     # adjudication = get_object_or_404(Adjudication, pk=adjudication_id)
     return redirect('/decisions/{}'.format(random_adjudication[0].id))
+
+def register(request):
+    if request.method == 'POST':
+        f = UserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.success(request, 'Account created successfully')
+            return redirect('/decisions')
+
+    else:
+        f = UserCreationForm()
+
+    return render(request, 'cadmin/register.html', {'form': f})    
 
 
 

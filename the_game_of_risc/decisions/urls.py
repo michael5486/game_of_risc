@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^random/$', views.random, name='random'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^register/$', views.register, name='register'),
+
 ]

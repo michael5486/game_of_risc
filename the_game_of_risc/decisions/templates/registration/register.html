@@ -1,0 +1,18 @@
+{% extends 'decisions/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h2> You are already logged in!</h2>
+
+{% else %}
+  <h2>Register your new account!</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+
+{% endif %}
+
+{% endblock %}

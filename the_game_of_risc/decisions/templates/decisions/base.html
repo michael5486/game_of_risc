@@ -28,9 +28,9 @@
             <div class="col-lg-4">        
                 <div class="well well-lg">
                     {% if user.is_authenticated %}
-                        <p>Welcome, {{ user.username }}. <a href="/decisions/logout/">Log out</a></p>
+                        <p>Welcome, {{ user.username }}. <a href="/decisions/logout">Log out</a></p>
                     {% else %}
-                        <p>Welcome, new user. Please <a href="/decisions/login/">log in</a> to begin reviewing applications.</p>
+                        <p>Welcome, new user. Please <a href="/decisions/login">log in</a> or <a href="/decisions/register">create a new account</a> to begin reviewing applications.</p>
                     {% endif %}
                 </div>
             </div>
@@ -47,10 +47,19 @@
 
     <hr>
 
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
     <div id="content">
         {% block content %}
         {% endblock %}
     </div> 
+
 
 </body>
 </html>
