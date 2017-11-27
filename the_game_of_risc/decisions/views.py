@@ -16,8 +16,7 @@ from django.contrib.auth.forms import UserCreationForm
 def index(request):
     random_adjudication_list = Adjudication.objects.order_by('?')[:5]
     if request.user.is_authenticated():
-        current_user = request.user
-        user_profile = UserProfile.objects.get(id=current_user.id)
+        user_profile = UserProfile.objects.get(user=request.user)
         num_correct = user_profile.num_correct_guesses
         num_total = user_profile.num_guesses
         if num_total == 0:
@@ -40,8 +39,7 @@ def detail(request, adjudication_id):
             decision.timestamp = timezone.now()
             decision.save()
 
-            current_user = request.user
-            user_profile = UserProfile.objects.get(id=current_user.id)
+            user_profile = UserProfile.objects.get(user=request.user)
             user_profile.num_guesses = user_profile.num_guesses + 1
 
             if decision.answer == adjudication.outcome:
@@ -54,7 +52,7 @@ def detail(request, adjudication_id):
         form=DecisionForm()
 
     if request.user.is_authenticated():
-        user_profile = UserProfile.objects.get(id=request.user.id)
+        user_profile = UserProfile.objects.get(user=request.user)
         num_correct = user_profile.num_correct_guesses
         num_total = user_profile.num_guesses
         if num_total == 0:
@@ -87,5 +85,7 @@ def register(request):
         f = UserCreationForm()
 
     return render(request, 'cadmin/register.html', {'form': f})
+
+    
 
 
