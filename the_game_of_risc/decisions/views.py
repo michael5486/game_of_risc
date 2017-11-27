@@ -4,12 +4,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-
 from .models import Adjudication, UserProfile
 from .forms import DecisionForm
 from django.contrib.auth.forms import UserCreationForm
-
-
 
 # Create your views here.
 
@@ -17,13 +14,8 @@ def index(request):
     random_adjudication_list = Adjudication.objects.order_by('?')[:5]
     if request.user.is_authenticated():
         user_profile = UserProfile.objects.get(user=request.user)
-        num_correct = user_profile.num_correct_guesses
-        num_total = user_profile.num_guesses
-        if num_total == 0:
-            score = 0
-        else:
-            score = round(num_correct / num_total * 100)
-        return render(request, 'decisions/index.html', {'random_adjudication_list':random_adjudication_list, 'num_correct':num_correct, 'num_total':num_total, 'score': score})
+        score_info = get_score_info(user_profile)
+        return render(request, 'decisions/index.html', {'random_adjudication_list':random_adjudication_list, 'num_correct':score_info[0], 'num_total':score_info[1], 'score': score_info[2]})
     return render(request, 'decisions/index.html', {'random_adjudication_list': random_adjudication_list})
 
 
@@ -53,16 +45,9 @@ def detail(request, adjudication_id):
 
     if request.user.is_authenticated():
         user_profile = UserProfile.objects.get(user=request.user)
-        num_correct = user_profile.num_correct_guesses
-        num_total = user_profile.num_guesses
-        if num_total == 0:
-            score = 0
-        else:
-            score = round(num_correct / num_total * 100)
-
-        return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response, 'num_correct':num_correct, 'num_total':num_total, 'score': score})
+        score_info = get_score_info(user_profile)
+        return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response, 'num_correct':score_info[0], 'num_total':score_info[1], 'score': score_info[2]})
     
-
     return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response})
 
 def random(request):
@@ -86,6 +71,27 @@ def register(request):
 
     return render(request, 'cadmin/register.html', {'form': f})
 
+def high_scores(request):
+    list_userprofiles = UserProfile.objects.all()
+    sorted_userprofiles = sorted(list_userprofiles, key=get_score_info)
+    high_score_list = sorted_userprofiles[:10]
+
+    if request.user.is_authenticated():
+        user_profile = UserProfile.objects.get(user=request.user)
+        score_info = get_score_info(user_profile)
+        return render(request, 'decisions/high_scores.html', {'high_scorers':high_score_list, 'num_correct':score_info[0], 'num_total':score_info[1], 'score': score_info[2]})
     
+    return render(request, 'decisions/high_scores.html', {'high_scorers':high_score_list,})
+
+
+def get_score_info(user_profile):
+    num_correct = user_profile.num_correct_guesses
+    num_total = user_profile.num_guesses
+    if num_total == 0:
+        score = 0
+    else:
+        score = round(num_correct / num_total * 100)
+    return (num_correct, num_total, score)
+
 
 
