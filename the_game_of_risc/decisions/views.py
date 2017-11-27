@@ -18,7 +18,13 @@ def index(request):
     if request.user.is_authenticated():
         current_user = request.user
         user_profile = UserProfile.objects.get(id=current_user.id)
-        return render(request, 'decisions/index.html', {'random_adjudication_list':random_adjudication_list, 'user_profile':user_profile})
+        num_correct = user_profile.num_correct_guesses
+        num_total = user_profile.num_guesses
+        if num_total == 0:
+            score = 0
+        else:
+            score = round(num_correct / num_total * 100)
+        return render(request, 'decisions/index.html', {'random_adjudication_list':random_adjudication_list, 'num_correct':num_correct, 'num_total':num_total, 'score': score})
     return render(request, 'decisions/index.html', {'random_adjudication_list': random_adjudication_list})
 
 
@@ -33,24 +39,36 @@ def detail(request, adjudication_id):
             decision.adjudication_id = adjudication
             decision.timestamp = timezone.now()
             decision.save()
+
+            current_user = request.user
+            user_profile = UserProfile.objects.get(id=current_user.id)
+            user_profile.num_guesses = user_profile.num_guesses + 1
+
             if decision.answer == adjudication.outcome:
                 correct_response = 1
+                user_profile.num_correct_guesses = user_profile.num_correct_guesses + 1
             else:
                 correct_response = 0
+            user_profile.save()    
     else:
         form=DecisionForm()
 
     if request.user.is_authenticated():
-        current_user = request.user
-        user_profile = UserProfile.objects.get(id=current_user.id)
-        return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response, 'user_profile':user_profile})
+        user_profile = UserProfile.objects.get(id=request.user.id)
+        num_correct = user_profile.num_correct_guesses
+        num_total = user_profile.num_guesses
+        if num_total == 0:
+            score = 0
+        else:
+            score = round(num_correct / num_total * 100)
+
+        return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response, 'num_correct':num_correct, 'num_total':num_total, 'score': score})
     
 
     return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response})
 
 def random(request):
     random_adjudication = Adjudication.objects.order_by('?')[:2]
-    # adjudication = get_object_or_404(Adjudication, pk=adjudication_id)
     return redirect('/decisions/{}'.format(random_adjudication[0].id))
 
 def register(request):

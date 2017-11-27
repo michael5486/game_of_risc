@@ -35,7 +35,8 @@
                 </div>     
                 {% if user.is_authenticated %}
                     <div class="well well-lg">
-                        <strong>Correct:</strong> {{ user_profile.num_correct_guesses }}         <strong>Total:</strong> {{ user_profile.num_guesses }}
+                        <strong>Correct:</strong> {{ num_correct }} <strong>Total:</strong> {{ num_total }} <strong>Score:</strong> {{score}}%
+
                     </div>
                 {% endif %}
             </div>
