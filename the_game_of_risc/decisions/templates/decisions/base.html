@@ -32,7 +32,12 @@
                     {% else %}
                         <p>Welcome, new user. Please <a href="/decisions/login">log in</a> or <a href="/decisions/register">create a new account</a> to begin reviewing applications.</p>
                     {% endif %}
-                </div>
+                </div>     
+                {% if user.is_authenticated %}
+                    <div class="well well-lg">
+                        <strong>Correct:</strong> {{ user_profile.num_correct_guesses }}         <strong>Total:</strong> {{ user_profile.num_guesses }}
+                    </div>
+                {% endif %}
             </div>
         </div>
 

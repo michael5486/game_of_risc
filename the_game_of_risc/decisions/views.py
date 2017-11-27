@@ -15,9 +15,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
     random_adjudication_list = Adjudication.objects.order_by('?')[:5]
-    context = {'random_adjudication_list': random_adjudication_list}
-
-    return render(request, 'decisions/index.html', context)
+    if request.user.is_authenticated():
+        current_user = request.user
+        user_profile = UserProfile.objects.get(id=current_user.id)
+        return render(request, 'decisions/index.html', {'random_adjudication_list':random_adjudication_list, 'user_profile':user_profile})
+    return render(request, 'decisions/index.html', {'random_adjudication_list': random_adjudication_list})
 
 
 def detail(request, adjudication_id):
@@ -37,6 +39,12 @@ def detail(request, adjudication_id):
                 correct_response = 0
     else:
         form=DecisionForm()
+
+    if request.user.is_authenticated():
+        current_user = request.user
+        user_profile = UserProfile.objects.get(id=current_user.id)
+        return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response, 'user_profile':user_profile})
+    
 
     return render(request, 'decisions/detail.html', {'adjudication': adjudication, 'form': form, 'correct_response':correct_response})
 
@@ -60,7 +68,6 @@ def register(request):
     else:
         f = UserCreationForm()
 
-    return render(request, 'cadmin/register.html', {'form': f})    
-
+    return render(request, 'cadmin/register.html', {'form': f})
 
 
