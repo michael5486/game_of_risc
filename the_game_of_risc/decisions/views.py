@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 
-from .models import Adjudication
+from .models import Adjudication, UserProfile
 from .forms import DecisionForm
 from django.contrib.auth.forms import UserCreationForm
 
@@ -50,6 +50,10 @@ def register(request):
         f = UserCreationForm(request.POST)
         if f.is_valid():
             f.save()
+            username = f.cleaned_data.get('username')
+            user = User.objects.get(username = username)
+            new_user_profile = UserProfile(user_id = user.id, num_guesses = 0, num_correct_guesses = 0)
+            new_user_profile.save()
             messages.success(request, 'Account created successfully')
             return redirect('/decisions')
 
