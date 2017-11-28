@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap3',
+    'captcha'
     'decisions.apps.DecisionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
