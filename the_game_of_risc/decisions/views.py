@@ -73,15 +73,18 @@ def register(request):
 
 def high_scores(request):
     list_userprofiles = UserProfile.objects.all()
-    sorted_userprofiles = sorted(list_userprofiles, key=get_score_info)
+    sorted_userprofiles = sorted(list_userprofiles, key=get_score, reverse=True)
     high_score_list = sorted_userprofiles[:10]
+    new_scores_list = []
+    for user_profile in high_score_list:
+        new_scores_list.append(get_score_info(user_profile))
 
     if request.user.is_authenticated():
         user_profile = UserProfile.objects.get(user=request.user)
         score_info = get_score_info(user_profile)
-        return render(request, 'decisions/high_scores.html', {'high_scorers':high_score_list, 'num_correct':score_info[0], 'num_total':score_info[1], 'score': score_info[2]})
+        return render(request, 'decisions/high_scores.html', {'high_scorers':new_scores_list, 'num_correct':score_info[0], 'num_total':score_info[1], 'score': score_info[2]})
     
-    return render(request, 'decisions/high_scores.html', {'high_scorers':high_score_list,})
+    return render(request, 'decisions/high_scores.html', {'high_scorers':new_scores_list})
 
 
 def get_score_info(user_profile):
@@ -91,7 +94,15 @@ def get_score_info(user_profile):
         score = 0
     else:
         score = round(num_correct / num_total * 100)
-    return (num_correct, num_total, score)
+    return (num_correct, num_total, score, user_profile.user)
 
+def get_score(user_profile):
+    num_correct = user_profile.num_correct_guesses
+    num_total = user_profile.num_guesses
+    if num_total == 0:
+        score = 0
+    else:
+        score = round(num_correct / num_total * 100)
+    return score
 
 

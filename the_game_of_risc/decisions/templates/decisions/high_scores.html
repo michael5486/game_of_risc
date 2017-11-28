@@ -10,15 +10,28 @@
 {% block content %}
 
     {% if high_scorers %}
-        <ol>
-        {% for userprofile in high_scorers %}
-                    <li>
-                        <h4>{{ userprofile.user }} Correct Guesses: {{ userprofile.num_correct_guesses}} Guesses: {{ userprofile.num_guesses }}
-                        </h4>
-                    </li>
-                <hr>
-        {% endfor %}
-        </ol>
-    {% endif %}
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Correct Guesses</th>
+                        <th>Total Guesses</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in high_scorers %}
+                        <tr>
+                            <td>{{ i.3 }}</td>
+                            <td>{{ i.0 }}</td>
+                            <td>{{ i.1 }}</td>
+                            <td>{{ i.2 }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     
 {% endblock %}
