@@ -28,3 +28,15 @@ Edited the admin panel to allow administrator to quickly edit data on the backen
 ### 6 
 Creating user interface with bootstrap
 http://django-bootstrap3.readthedocs.io/en/latest/quickstart.html
+
+### 7 
+Implemented login system, form processing, and interactions between outout html templates and backend sqlite database
+
+### 8
+Manually removed obvious markers from each adjudication, reviewed each result and removed false answers from earlier language processing, removed a lot of debt-related ones because they got pretty boring after awhile
+
+### 9
+Packaged and deployed to AWS elastic beanstalk instance
+
+### 10
+SSHed into related AWS EC2 instance, installed Apache and mod_wsgi (httpd mod_wsgi)
